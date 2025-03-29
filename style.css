@@ -102,9 +102,9 @@ section {
     font-weight: 800;
     letter-spacing: -1px;
     text-shadow:
-        0 0 5px rgba(255, 255, 255, 0.2),
-        0 0 10px var(--primary-color),
-        0 0 20px rgba(8, 253, 216, 0.3);
+        0 0 2px rgba(255, 255, 255, 0.2),
+        0 0 5px var(--primary-color),
+        0 0 10px rgba(8, 253, 216, 0.3);
     animation: textGlow 3s ease-in-out infinite alternate;
 }
 

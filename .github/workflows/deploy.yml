@@ -2,7 +2,7 @@ name: Deploy Vite to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # Your default branch
+    branches: ["main"] 
   workflow_dispatch:
 
 permissions:
@@ -16,7 +16,6 @@ concurrency:
 
 jobs:
   deploy:
-    # This automatically syncs with your Custom Domain settings in your repository!
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -31,11 +30,15 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          cache-dependency-path: './portfolio/package-lock.json'
           
+
       - name: Install dependencies
+        working-directory: ./portfolio
         run: npm ci
         
       - name: Build project
+        working-directory: ./portfolio
         run: npm run build
         
       - name: Setup Pages
@@ -44,7 +47,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # Uploads the Vite build output
+          path: './portfolio/dist' 
           
       - name: Deploy to GitHub Pages
         id: deployment

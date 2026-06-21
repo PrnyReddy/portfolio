@@ -25,6 +25,11 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  cursor: none; /* Hide default cursor for CustomCursor */
+}
+
+a, button, input, [role="button"] {
+  cursor: none; /* Hide cursor on interactables too */
 }
 
 /* Custom Scrollbar for a premium feel */
@@ -70,3 +75,73 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Immersive Effects */
+.classified-blur {
+  filter: blur(8px);
+  user-select: none;
+  transition: filter 0.3s ease;
+}
+
+.classified-blur:hover {
+  filter: blur(4px);
+}
+
+.classified-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.classified-badge {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 0, 0, 0.5);
+  color: #ff4444;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transform: rotate(-15deg);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+}
+
+.glitch-effect {
+  animation: glitch 3s infinite;
+}
+
+@keyframes glitch {
+  0% { opacity: 1; }
+  90% { opacity: 1; transform: translate(0); }
+  91% { opacity: 0.8; transform: translate(2px, 1px); }
+  92% { opacity: 1; transform: translate(-1px, -2px); }
+  93% { opacity: 0.9; transform: translate(1px, 2px); }
+  94% { opacity: 1; transform: translate(0); }
+  100% { opacity: 1; }
+}
+
+/* Override hardcoded react-leetcode-calendar styles */
+.leetcode-wrapper > div {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.leetcode-wrapper > div > div > div {
+  background-color: transparent !important;
+}
+

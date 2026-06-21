@@ -9,11 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.101.0",
+    "axios": "^1.18.0",
     "framer-motion": "^11.0.8",
     "lucide-react": "^0.344.0",
     "react": "^18.2.0",
+    "react-activity-calendar": "^3.2.0",
     "react-dom": "^18.2.0",
-    "react-github-calendar": "^4.1.1"
+    "react-github-calendar": "^4.1.1",
+    "react-leetcode-calendar": "^2.6.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",

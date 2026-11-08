@@ -8,7 +8,8 @@ export default function ContactForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
-    const f = new FormData(e.currentTarget)
+    const form = e.currentTarget // React clears currentTarget after the first await
+    const f = new FormData(form)
     if (f.get('botcheck')) return // honeypot: bots fill the hidden field
 
     if (!KEY) {
@@ -34,7 +35,7 @@ export default function ContactForm() {
       })
       const data = await res.json()
       if (!data.success) throw new Error(data.message)
-      e.currentTarget.reset()
+      form.reset()
       setStatus('sent')
     } catch {
       setStatus('error')

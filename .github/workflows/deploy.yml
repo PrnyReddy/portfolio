@@ -40,6 +40,8 @@ jobs:
 
       - name: Build project
         working-directory: portfolio-v2
+        env:
+          VITE_WEB3FORMS_KEY: ${{ vars.WEB3FORMS_KEY }}
         run: npm run build
 
       - name: Setup Pages

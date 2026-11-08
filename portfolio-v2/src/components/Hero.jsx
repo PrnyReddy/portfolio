@@ -23,7 +23,7 @@ function Letter({ char, mx, my }) {
   useEffect(() => mx.on('change', () => pos.set({ x: mx.get(), y: my.get() })), [mx, my, pos])
   const x = useSpring(useTransform(pos, shift('x')), { stiffness: 180, damping: 14 })
   const y = useSpring(useTransform(pos, shift('y')), { stiffness: 180, damping: 14 })
-  return <motion.span ref={ref} style={{ x, y, display: 'inline-block' }}>{char}</motion.span>
+  return <motion.span ref={ref} className={char === '.' ? 'dot-pop' : undefined} style={{ x, y, display: 'inline-block' }}>{char}</motion.span>
 }
 
 export default function Hero() {
@@ -33,7 +33,7 @@ export default function Hero() {
   const my = useMotionValue(-9999)
   const sx = useSpring(mx, { stiffness: 120, damping: 20 })
   const sy = useSpring(my, { stiffness: 120, damping: 20 })
-  const spot = useTransform([sx, sy], ([x, y]) => `radial-gradient(500px circle at ${x}px ${y}px, rgba(var(--accent-rgb),.10), transparent 60%)`)
+  const spot = useTransform([sx, sy], ([x, y]) => `radial-gradient(500px circle at ${x}px ${y}px, rgba(var(--accent-rgb),.05), transparent 60%)`)
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], [0, -160])

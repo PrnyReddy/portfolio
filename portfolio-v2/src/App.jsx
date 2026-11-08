@@ -4,16 +4,15 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import GitHubCalendar from 'react-github-calendar'
 import Hero from './components/Hero'
-import { applyTheme, heatScale, themes } from './theme'
+import ContactForm from './components/ContactForm'
+import { applyPalette, heatScale, palette } from './theme'
 import { LeetCodeHeatmap } from './components/LeetCodeHeatmap'
 
 gsap.registerPlugin(ScrollTrigger)
 
-applyTheme('lime')
-const heat = { light: heatScale(themes.lime.accent), dark: heatScale(themes.lime.accent) }
 
-const EMAIL = 'prnyreddy@gmail.com' // single place to change the contact email
-
+applyPalette()
+const heat = { light: heatScale(palette.accent), dark: heatScale(palette.accent) }
 
 const projects = [
   {
@@ -31,9 +30,19 @@ const projects = [
     hueVar: '--h2',
     title: 'Multi-Agent Course Summarizer',
     type: 'AI & GenAI System',
-    desc: 'Multi-agent LLM orchestration that analyses course material, writes summaries and generates quizzes.',
-    tech: ['Python', 'Multi-Agent Systems', 'Streamlit'],
+    desc: 'Multi-agent LLM pipeline that turns YouTube videos or text into summaries, quizzes and glossaries, with model routing, retries and Redis caching.',
+    tech: ['FastAPI', 'LangChain', 'Whisper', 'Redis', 'Streamlit'],
     href: 'https://github.com/Prnyreddy/ai-summarizer',
+    cta: 'Source code',
+  },
+  {
+    n: '03',
+    hueVar: '--h1',
+    title: 'Jupiter Router Explorer',
+    type: 'Hackathon Project',
+    desc: 'Visualizes and compares Jupiter token-swap routes on Solana, with route graphs, price impact and slippage details. Built for the Namaste Jupiverse hackathon.',
+    tech: ['Next.js', 'ReactFlow', 'Solana Web3.js', 'Tailwind'],
+    href: 'https://github.com/Prnyreddy/token_routes',
     cta: 'Source code',
   },
 ]
@@ -49,12 +58,26 @@ const skills = [
 
 export default function App() {
 
+
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24 })
-  const hue = useTransform(scrollYProgress, [0, 1], ['hue-rotate(0deg)', 'hue-rotate(50deg)'])
+  const hue = useTransform(scrollYProgress, [0, 1], ['hue-rotate(0deg)', 'hue-rotate(0deg)'])
 
   const trackRef = useRef(null)
   const pinRef = useRef(null)
+
+  useEffect(() => {
+    // specular highlight follows the pointer across any glass surface
+    const onMove = (e) => {
+      const el = e.target.closest?.('.glass')
+      if (!el) return
+      const r = el.getBoundingClientRect()
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`)
+      el.style.setProperty('--my', `${e.clientY - r.top}px`)
+    }
+    window.addEventListener('pointermove', onMove)
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [])
 
   useEffect(() => {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -88,14 +111,6 @@ export default function App() {
         opacity: 0, y: 40, stagger: 0.15, duration: 0.8, ease: 'power3.out',
         scrollTrigger: { trigger: '.activity', start: 'top 70%' },
       })
-      const mag = document.querySelector('.magnet')
-      const onMove = (e) => {
-        const r = mag.getBoundingClientRect()
-        gsap.to(mag, { x: (e.clientX - r.left - r.width / 2) * 0.25, y: (e.clientY - r.top - r.height / 2) * 0.35, duration: 0.4 })
-      }
-      const onLeave = () => gsap.to(mag, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' })
-      mag.addEventListener('mousemove', onMove)
-      mag.addEventListener('mouseleave', onLeave)
       gsap.from('.skill-row', {
         opacity: 0, y: 40, stagger: 0.1, duration: 0.8, ease: 'power3.out',
         scrollTrigger: { trigger: '.skills', start: 'top 75%' },
@@ -110,11 +125,17 @@ export default function App() {
 
   return (
     <>
+      <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true">
+        <filter id="lg" x="0" y="0" width="100%" height="100%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="3" result="n" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="14" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </svg>
       <motion.div className="aurora" style={{ filter: hue }} aria-hidden="true"><span /><span /><span /></motion.div>
       <div className="grain" aria-hidden="true" />
       <motion.div className="progress" style={{ scaleX: progress }} />
 
-      <nav className="nav">
+      <nav className="nav glass glass-lens">
         <span>PR</span>
         <div>
           <a href="#work">Work</a>
@@ -136,11 +157,13 @@ export default function App() {
           {projects.map((p) => (
             <article className="panel project" key={p.n} style={{ '--h': `var(${p.hueVar})` }}>
               <span className="num">{p.n}</span>
-              <p className="eyebrow">{p.type}</p>
-              <h3>{p.title}</h3>
-              <p className="desc">{p.desc}</p>
-              <ul>{p.tech.map((t) => <li key={t}>{t}</li>)}</ul>
-              <a href={p.href} target="_blank" rel="noopener noreferrer">{p.cta} ↗</a>
+              <div className="project-card glass">
+                <p className="eyebrow">{p.type}</p>
+                <h3>{p.title}</h3>
+                <p className="desc">{p.desc}</p>
+                <ul>{p.tech.map((t) => <li key={t} className="glass-chip">{t}</li>)}</ul>
+                <a className="glass-btn" href={p.href} target="_blank" rel="noopener noreferrer">{p.cta} ↗</a>
+              </div>
             </article>
           ))}
         </div>
@@ -150,7 +173,7 @@ export default function App() {
         <h2>Stack</h2>
         <div className="skills-grid">
         {skills.map(([k, v]) => (
-          <div className="skill-row" key={k}>
+          <div className="skill-row glass" key={k}>
             <span>{k}</span>
             <p>{v}</p>
           </div>
@@ -160,11 +183,11 @@ export default function App() {
 
       <section id="activity" className="activity">
         <h2>Activity</h2>
-        <div className="heat">
+        <div className="heat glass">
           <p className="eyebrow">GitHub</p>
           <GitHubCalendar username="prnyreddy" colorScheme="dark" blockSize={13} blockMargin={4} fontSize={12} theme={heat} />
         </div>
-        <div className="heat leetcode-wrapper">
+        <div className="heat glass leetcode-wrapper">
           <p className="eyebrow">LeetCode</p>
           <LeetCodeHeatmap username="prnyreddy" blockSize={13} blockMargin={4} fontSize={12} theme={heat} />
         </div>
@@ -178,7 +201,7 @@ export default function App() {
           <span className="mask"><span>Let&apos;s build</span></span>
           <span className="mask"><span style={{ color: 'var(--accent)' }}>something.</span></span>
         </h2>
-        <a className="magnet" href={`mailto:${EMAIL}`}>{EMAIL} <span>↗</span></a>
+        <ContactForm />
         <div className="links">
           <a href="https://github.com/Prnyreddy" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="https://linkedin.com/in/prnyreddy" target="_blank" rel="noopener noreferrer">LinkedIn</a>

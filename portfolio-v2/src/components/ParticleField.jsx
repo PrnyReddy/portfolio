@@ -10,7 +10,8 @@ export default function ParticleField() {
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const mouse = { x: -9999, y: -9999 }
     let w, h, dpr, parts, raf
-    let rgb = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb') || '200,255,90'
+    const pop = getComputedStyle(document.documentElement).getPropertyValue('--pop-rgb') || '255,59,59'
+    let rgb = getComputedStyle(document.documentElement).getPropertyValue('--accent-rgb') || '244,241,234'
 
     const init = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -52,7 +53,7 @@ export default function ParticleField() {
           }
         }
         if (d < 160) {
-          ctx.strokeStyle = `rgba(${rgb},${(1 - d / 160) * 0.8})`
+          ctx.strokeStyle = `rgba(${pop},${(1 - d / 160) * 0.8})`
           ctx.lineWidth = 0.8
           ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke()
         }

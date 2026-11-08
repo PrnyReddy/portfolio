@@ -6,7 +6,7 @@
   --border-hover: rgba(255, 255, 255, 0.2);
   --text-main: #ffffff;
   --text-muted: #888888;
-  --accent: #ffffff;
+  --accent: #7c9cff;
 
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -25,11 +25,46 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  cursor: none; /* Hide default cursor for CustomCursor */
 }
 
-a, button, input, [role="button"] {
-  cursor: none; /* Hide cursor on interactables too */
+html { scroll-behavior: smooth; }
+
+/* Hide native cursor only where a custom cursor makes sense */
+@media (hover: hover) and (pointer: fine) {
+  body, a, button, input, [role="button"] { cursor: none; }
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+nav a:hover { color: var(--accent) !important; }
+.btn-primary:hover, .btn-secondary:hover { transform: translateY(-2px); }
+.btn-secondary:hover { background: var(--surface-hover) !important; }
+
+/* Bento grid: 4 cols desktop, 2 tablet, 1 mobile */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(250px, auto);
+  gap: 1.5rem;
+}
+.bento-card { grid-column: span var(--col, 1); grid-row: span var(--row, 1); }
+@media (max-width: 900px) {
+  .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .bento-card { grid-column: span min(var(--col, 1), 2); }
+}
+@media (max-width: 600px) {
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-card { grid-column: span 1; grid-row: span 1; }
+  .hero-cta, .site-footer, .footer-links { flex-wrap: wrap; gap: 1rem !important; }
+  .site-footer { flex-direction: column; align-items: flex-start !important; }
+  .project-panel { padding: 1.75rem !important; }
+  .project-panel h3 { font-size: 2rem !important; }
+  .project-panel p { max-width: 100% !important; }
+  .skills-row { flex-direction: column; gap: 0.2rem !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
 
 /* Custom Scrollbar for a premium feel */
@@ -74,65 +109,6 @@ a, button, input, [role="button"] {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-/* Immersive Effects */
-.classified-blur {
-  filter: blur(8px);
-  user-select: none;
-  transition: filter 0.3s ease;
-}
-
-.classified-blur:hover {
-  filter: blur(4px);
-}
-
-.classified-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.15),
-    rgba(0, 0, 0, 0.15) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  pointer-events: none;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.classified-badge {
-  background: rgba(0, 0, 0, 0.8);
-  border: 1px solid rgba(255, 0, 0, 0.5);
-  color: #ff4444;
-  padding: 0.5rem 1rem;
-  font-family: var(--font-mono);
-  font-size: 0.9rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transform: rotate(-15deg);
-  backdrop-filter: blur(4px);
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-}
-
-.glitch-effect {
-  animation: glitch 3s infinite;
-}
-
-@keyframes glitch {
-  0% { opacity: 1; }
-  90% { opacity: 1; transform: translate(0); }
-  91% { opacity: 0.8; transform: translate(2px, 1px); }
-  92% { opacity: 1; transform: translate(-1px, -2px); }
-  93% { opacity: 0.9; transform: translate(1px, 2px); }
-  94% { opacity: 1; transform: translate(0); }
-  100% { opacity: 1; }
 }
 
 /* Override hardcoded react-leetcode-calendar styles */

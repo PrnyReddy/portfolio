@@ -7,14 +7,7 @@ import { LeetCodeHeatmap } from './LeetCodeHeatmap';
 export const BentoGrid = () => {
   return (
     <section id="about" style={{ padding: '5vh 0', marginBottom: '10vh' }}>
-      <div 
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gridAutoRows: 'minmax(250px, auto)',
-          gap: '1.5rem',
-        }}
-      >
+      <div className="bento-grid">
         {/* Card 1: Main Identity (2x2) */}
         <BentoCard colSpan={2} rowSpan={2} delay={0.1}>
           <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'center' }}>
@@ -38,27 +31,27 @@ export const BentoGrid = () => {
             </div>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.8rem', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
               
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="skills-row" style={{ display: 'flex', gap: '1rem' }}>
                 <span style={{ color: 'var(--text-muted)', minWidth: '110px' }}>Languages:</span>
                 <span style={{ color: 'var(--text-main)' }}>JavaScript, TypeScript, Python, C++, SQL, HTML/CSS</span>
               </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="skills-row" style={{ display: 'flex', gap: '1rem' }}>
                 <span style={{ color: 'var(--text-muted)', minWidth: '110px' }}>Frontend:</span>
                 <span style={{ color: 'var(--text-main)' }}>React.js, Redux</span>
               </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="skills-row" style={{ display: 'flex', gap: '1rem' }}>
                 <span style={{ color: 'var(--text-muted)', minWidth: '110px' }}>Backend:</span>
                 <span style={{ color: 'var(--text-main)' }}>Node.js, Express.js, FastAPI, Apache Kafka, REST APIs, JWT</span>
               </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="skills-row" style={{ display: 'flex', gap: '1rem' }}>
                 <span style={{ color: 'var(--text-muted)', minWidth: '110px' }}>AI & GenAI:</span>
                 <span style={{ color: 'var(--text-main)' }}>LLMs, AutoGen, RAG, LangChain, Azure OpenAI, AWS Bedrock, Vector Search, Multi-Agent Orchestration</span>
               </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="skills-row" style={{ display: 'flex', gap: '1rem' }}>
                 <span style={{ color: 'var(--text-muted)', minWidth: '110px' }}>Databases:</span>
                 <span style={{ color: 'var(--text-main)' }}>PostgreSQL, Elasticsearch, Redis, SQL Server, Databricks</span>
               </div>
-              <div style={{ display: 'flex', gap: '1rem' }}>
+              <div className="skills-row" style={{ display: 'flex', gap: '1rem' }}>
                 <span style={{ color: 'var(--text-muted)', minWidth: '110px' }}>DevOps/Tools:</span>
                 <span style={{ color: 'var(--text-main)' }}>Docker, Kubernetes, Jenkins, AWS, Git, GitHub Actions</span>
               </div>

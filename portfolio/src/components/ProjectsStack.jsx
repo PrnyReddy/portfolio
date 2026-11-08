@@ -46,7 +46,7 @@ const ProjectCard = ({ project, index, totalProjects }) => {
       }}
     >
       <div 
-        className="glass-panel"
+        className="glass-panel project-panel"
         style={{ 
           width: '100%', 
           maxWidth: '1000px', 

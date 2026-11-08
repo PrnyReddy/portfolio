@@ -25,15 +25,15 @@ export const BentoCard = ({ children, className = '', colSpan = 1, rowSpan = 1, 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay, ease: 'easeOut' }}
       style={{
-        gridColumn: `span ${colSpan}`,
-        gridRow: `span ${rowSpan}`,
+        '--col': colSpan,
+        '--row': rowSpan,
         position: 'relative',
         borderRadius: '24px',
         backgroundColor: 'var(--surface)',
         border: '1px solid var(--border)',
         overflow: 'hidden',
       }}
-      className={`glass-panel ${className}`}
+      className={`glass-panel bento-card ${className}`}
       whileHover={{ scale: 0.98, borderColor: 'var(--border-hover)' }}
     >
       {/* Magnetic Glow Effect */}
